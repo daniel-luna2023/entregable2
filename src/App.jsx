@@ -36,45 +36,39 @@ function App() {
               1
             ),
           };
-
           setTemp(obj);
+        
+        
         })
-
+   
     }
 
-
-
+  
+    
   }, [coords]);
 
 
-  useEffect(() => {
-    console.log(weather?.weather[0].description)
-
+useEffect(() => {
+  console.log(weather?.weather[0].description)
+  if (weather?.weather[0].description !== undefined) {
     const ImageApiKey = `39164457-e4d578415391bd203bf06bf93`;
-    const searchQuery = weather?.weather[0].description
-    console.log(searchQuery)
-    const ImageUrl = `https://pixabay.com/api/?key=${ImageApiKey}&image_type=photo&q=('${searchQuery}')`;
-    console.log(ImageUrl)
+    const ImageUrl = `https://pixabay.com/api/?key=${ImageApiKey}&q=encodeURIComponent("${weather?.weather[0].description}")&image_type=photo`;
     axios
       .get(ImageUrl)
-      .then((res) => {
-        if (res.data.hits.length > 0) {
-          const firstImageURL = res.data.hits[0].webformatURL;
-          setImageURL(firstImageURL);
-        }
-      })
+      .then((res) => setImage(res.data))
       .catch((err) => console.log(err));
+ 
+  }
+
+
+}, [coords])
 
 
 
 
-  }, [weather])
-
-  console.log(imageURL)
-
-  /*Aqui puedes cambiar la URL que puse en caso de que no exista */
-  document.body.style = `background-image: url(${imageURL});`
-
+  console.log(Image)
+  document.body.style = `background-image: url(${Image?.hits[0].largeImageURL});`
+  
 
   return (
     <main className="container" >

@@ -7,7 +7,7 @@ function App() {
   const [coords, setCoords] = useState();
   const [weather, setWeather] = useState();
   const [temp, setTemp] = useState();
-  const [Image, setImage] = useState();
+  const [imageURL, setImageURL] = useState('');
 
   console.log(weather)
 
@@ -38,43 +38,48 @@ function App() {
           };
 
           setTemp(obj);
-        
-        
         })
-   
+
     }
 
-  
-    
+
+
   }, [coords]);
 
 
-useEffect(() => {
-  console.log(weather?.weather[0].description)
-  if (weather?.weather[0].description !== undefined) {
+  useEffect(() => {
+    console.log(weather?.weather[0].description)
+
     const ImageApiKey = `39164457-e4d578415391bd203bf06bf93`;
-    const ImageUrl = `https://pixabay.com/api/?key=${ImageApiKey}&q=encodeURIComponent("${weather?.weather[0].description}")&image_type=photo`;
+    const searchQuery = weather?.weather[0].description
+    console.log(searchQuery)
+    const ImageUrl = `https://pixabay.com/api/?key=${ImageApiKey}&image_type=photo&q=('${searchQuery}')`;
+    console.log(ImageUrl)
     axios
       .get(ImageUrl)
-      .then((res) => setImage(res.data))
+      .then((res) => {
+        if (res.data.hits.length > 0) {
+          const firstImageURL = res.data.hits[0].webformatURL;
+          setImageURL(firstImageURL);
+        }
+      })
       .catch((err) => console.log(err));
- 
-  }
-
-
-}, [coords])
 
 
 
 
-  console.log(Image)
-  document.body.style = `background-image: url(${Image?.hits[0].largeImageURL});`
-  
+  }, [weather])
+
+  console.log(imageURL)
+
+  /*Aqui puedes cambiar la URL que puse en caso de que no exista */
+  document.body.style = `background-image: url(${imageURL});`
+
 
   return (
     <main className="container" >
-      <WeatherCards weather={weather} temp={temp} Image={Image} />
-      
+      <WeatherCards weather={weather} temp={temp} Image={imageURL} />
+
     </main>
   );
 }

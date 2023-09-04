@@ -10,6 +10,9 @@ h1, h2, p, ul,li{
 }
 body {
   margin: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 button {
   border: none;

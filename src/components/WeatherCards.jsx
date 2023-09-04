@@ -34,15 +34,15 @@ const WeatherCards = ({ weather, temp, Image }) => {
           <h3>"{weather?.weather[0].description}"</h3>
           <ul>
             <li>
-              <span>wind speed</span>
+              <span>wind speed: </span> 
               <span>{weather?.wind.speed} m/s</span>
             </li>
             <li>
-              <span>Clouds</span>
+              <span>Clouds: </span>
               <span>{weather?.clouds.all} %</span>
             </li>
             <li>
-              <span>Pressure</span>
+              <span>Pressure: </span>
               <span>{weather?.main.pressure} hpa</span>
             </li>
           </ul>

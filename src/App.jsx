@@ -36,39 +36,21 @@ function App() {
               1
             ),
           };
-
           setTemp(obj);
-        
-        
+          const ImageApiKey = `39164457-e4d578415391bd203bf06bf93`;
+          const ImageUrl = `https://pixabay.com/api/?key=${ImageApiKey}&q=${encodeURIComponent(res.data?.weather[0].description)}`;
+          axios
+            .get(ImageUrl)
+            .then((res) => setImage(res.data))
+            .catch((err) => console.log(err));
         })
-   
     }
-
-  
-    
+   
   }, [coords]);
 
 
-useEffect(() => {
-  console.log(weather?.weather[0].description)
-  if (weather?.weather[0].description !== undefined) {
-    const ImageApiKey = `39164457-e4d578415391bd203bf06bf93`;
-    const ImageUrl = `https://pixabay.com/api/?key=${ImageApiKey}&q=encodeURIComponent("${weather?.weather[0].description}")&image_type=photo`;
-    axios
-      .get(ImageUrl)
-      .then((res) => setImage(res.data))
-      .catch((err) => console.log(err));
- 
-  }
-
-
-}, [coords])
-
-
-
-
   console.log(Image)
-  document.body.style = `background-image: url(${Image?.hits[0].largeImageURL});`
+  document.body.style = `background-image: url(${Image?.hits[3].largeImageURL});`
   
 
   return (

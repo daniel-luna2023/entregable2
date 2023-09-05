@@ -49,13 +49,12 @@ function App() {
   }, [coords]);
 
 
-  console.log(Image)
-  document.body.style = `background-image: url(${Image?.hits[3].largeImageURL});`
+  document.body.style = `background-image: url(${Image?.hits[0].largeImageURL});`
   
 
   return (
     <main className="container" >
-      <WeatherCards weather={weather} temp={temp} Image={Image} />
+      <WeatherCards weather={weather} temp={temp}/>
       
     </main>
   );

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
-const WeatherCards = ({ weather, temp, Image }) => {
+const WeatherCards = ({ weather, temp,}) => {
     console.log(weather);
-    console.log(Image)
+   
 
   const [iscelsius, setIscelsius] = useState(true);
 

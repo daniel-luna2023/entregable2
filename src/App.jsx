@@ -8,8 +8,9 @@ function App() {
   const [weather, setWeather] = useState();
   const [temp, setTemp] = useState();
   const [Image, setImage] = useState();
+  const [randomImage, setRandomImage] = useState("")
 
-  console.log(weather)
+ 
 
   useEffect(() => {
     const success = (pos) => {
@@ -41,19 +42,27 @@ function App() {
           const ImageUrl = `https://pixabay.com/api/?key=${ImageApiKey}&q=${encodeURIComponent(res.data?.weather[0].description)}`;
           axios
             .get(ImageUrl)
-            .then((res) => setImage(res.data))
+            .then((res) => {
+              setImage(res.data)
+              getRandomImage()
+            })
             .catch((err) => console.log(err));
         })
     }
    
   }, [coords]);
 
-
-  document.body.style = `background-image: url(${Image?.hits[0].largeImageURL});`
-  
-
+  const getRandomImage = () => {
+    
+    if (Image?.hits.length) {
+      const mierda = Math.floor(Math.random() * Image.hits.length)
+      setRandomImage(Image.hits[mierda].largeImageURL)
+      
+    }
+  }
+    
   return (
-    <main className="container" >
+    <main className="container" style={{backgroundImage:`url(${randomImage})`}} >
       <WeatherCards weather={weather} temp={temp}/>
       
     </main>
@@ -61,3 +70,4 @@ function App() {
 }
 
 export default App;
+
